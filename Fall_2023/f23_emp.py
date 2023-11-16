@@ -16,10 +16,11 @@ def preprocess(df):
 
 def execute():
     df=create_df('emp_test')
-    preprocess(df)
+    df = preprocess(df)
     #stats_responded(df)
     #stats_jobtypes(df)
     #stats_recemp(df)
     #stats_jobsearch(df)
+    df.to_csv("test_out.csv")
 
 execute()
