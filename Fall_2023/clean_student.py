@@ -1,10 +1,11 @@
 import pandas as pd
 
-career_fair_number= '37526'
-career_fair_date='04_12_23'
+career_fair_number= '42510'
+career_fair_date='10_11_23'
 
 def create_df(filename):
     df=pd.read_csv(f"{filename}.csv")
+    print(df.shape)
     return df
 
 def drop_rows(df):
@@ -59,8 +60,8 @@ def acronyms(df):
         if college in dict.keys():
             df.loc[df['College'] == f'{college}', 'College']=dict[college]
 
-def change_symbols(df): #convert ampersand to 'and'...reduce symbols 
-     df['Majors'] = df['Majors'].apply(lambda x: x.replace('&', 'and'))
+def change_symbols(df): #convert ampersand to 'and'...reduce symbols
+    df['Majors'] = df['Majors'].apply(lambda x: x.replace('&', 'and') if pd.notna(x) else "XXXXXXXXXX")
 
 def fill_blanks(df):
     cas_majors= ['Ancient Studies', 'Anthropology', 'Art History', 'Biochemistry', 'Biology', 'Chemistry', 'Child Studies', 'Classical Studies', 'Communication', 'Computer Science', 'Economics (BS)', 'Economics' 'Engineering Physics', 'English', 'Environmental Studies and Sciences', 'Ethnic Studies', 'Greek Language and Literature', 'History', 'Individual Studies', 'Latin and Greek', 'Latin Language and Literature', 'Mathematics', 'Military Science', 'Modern Languages and Literatures', 'Arabic', 'Chinese', 'French', 'German', 'Italian', 'Japanese', 'Spanish', 'Music', 'Neuroscience', 'Philosophy', 'Physics', 'Political Science', 'Psychology', 'Public Health Science', 'Religious Studies', 'Sociology', 'Studio Art', 'Theatre and Dance', "Women's and Gender Studies", "Environmental Science"]
@@ -78,13 +79,13 @@ def fill_blanks(df):
                 df.loc[index, 'College']="XXXXXXXXXXXXX" #### Temp solution for comma separated majors
 
 def gender_race(df1):
-    df2=pd.read_csv('gender.csv')
+    df2=pd.read_csv('gender1.csv')
     merged_df=pd.merge(df1, df2[['Student Attendees Email - Institution', 'Student Attendees Gender', 'Student Attendees Ethnicity']], left_on='Email Address', right_on='Student Attendees Email - Institution', how='left')
     merged_df.drop('Student Attendees Email - Institution', axis=1, inplace=True)
     merged_df.to_csv(f'{career_fair_date}_Career Fair_Student Raw Data_{career_fair_number}.csv', index=False)
 
 def execute():
-    df=create_df('37526')
+    df=create_df('42510')
     drop_rows(df)
     checked_in(df)
     remove_ccstaff(df)

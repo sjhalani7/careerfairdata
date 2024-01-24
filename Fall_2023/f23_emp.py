@@ -11,6 +11,7 @@ def preprocess(df):
     cols_to_keep = ["RecipientEmail", "Q21", 'Q3',	"Q4", "Q5", "Q6", "Q8", 'Q9', "Q10", "Q13", "Q16", "Q18", "Q20_NPS_GROUP", "Q20", "Q14", "Q11"]
     df = df[cols_to_keep]
     print(df.head())
+    print(df.tail())
     print(df.columns)
     return df
 
